@@ -107,6 +107,8 @@ myApp.factory('customerServices', ['$http', function($http) {
         if ((RicevutoDelegato1 == 1) && ( (customerReq.Delegato1 == '') || (customerReq.Delegato1 == null))) {   
           return;
         } 
+
+        customerReq.QRCODE= $scope.customer.QRCODE;
         if ((RicevutoUtente == 1) && ((customerReq.CodiceOspite != customerReq.QRCODE))) {
           return;
         }
@@ -216,12 +218,10 @@ myApp.controller('editCustomerController', ['$scope', 'customerResolved', 'custo
   };
 
   $scope.leggiqrcode = function() {
-	
-    
+	  
     cordova.plugins.barcodeScanner.scan(
-         function (result) {
-           alert(result.text);
-          customer.QRCODE= result.text;
+         function () {
+          $scope.customer.QRCODE= result.text;
        }, 
        function (error) {
          alert("Errore nella scansione " + error);
