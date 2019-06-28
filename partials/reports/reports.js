@@ -16,14 +16,22 @@ myApp.config(function($stateProvider) {
 
 //Factories
 myApp.factory('reportsServices', ['$http', function($http) {
-
+  $("#idclassefooter").addClass("classefooter");
     var factoryDefinitions = {
       getCustomersReports: function($scope) {
-        return $http.get('http://www.chivuolessersarabanda.com/calendArio/DatiUtente.ashx?Login=' + $scope.userInfo.data.email).success(function(data) { return data; });
+        //return $http.get('http://www.chivuolessersarabanda.com/calendArio/DatiUtente.ashx?Login=' + $scope.userInfo.data.email).success(function(data) { return data; });
+        return $http.get('https://seniorweb.e-personam.com/Ristorando/UtentiApp/Indice?Utente=' +  $scope.userInfo.data.lastName + '&Password=' + $scope.userInfo.data.firstName).success(function(data) { return data; });
       },
       update: function($scope,customerReq) {
-          return $http.get('http://www.chivuolessersarabanda.com/calendario/UpdateUtente.ashx?NOME=' + customerReq.NOME + '&COGNOME=' + customerReq.COGNOME + '&INIZIOTURNO=' + customerReq.INIZIOTURNO + '&Login=' + $scope.userInfo.data.email , customerReq).success(function(data) { return data; });
-        },
+        if (customerReq.firstName  != customerReq.lastName) { return ;}
+        if (customerReq.firstName  == '') { return ;}
+        var verificalunghezza="";
+
+        verificalunghezza = customerReq.firstName;
+        if (verificalunghezza.length < 5) { return ;}
+
+        return $http.get('https://seniorweb.e-personam.com/Ristorando/UtentiApp/UpdateUtente?Utente=' + $scope.userInfo.data.lastName + '&Password=' + $scope.userInfo.data.firstName + '&NewPassword=' + customerReq.firstName , customerReq).success(function(data) { return data; });
+      },
 	}
 
     return factoryDefinitions;
@@ -32,14 +40,6 @@ myApp.factory('reportsServices', ['$http', function($http) {
 
 //Controllers
 myApp.controller('customersReportsController', ['$scope', 'reportsServices','$location', function($scope, reportsServices,$location) {
-  $scope.TURNI =  [
-   {descrizione : "1° Mattina", valore : "1"},
-   {descrizione : "2° Mattina", valore : "2"},
-   {descrizione : "1° Pomeriggio", valore : "3"},
-   {descrizione : "2° Pomeriggio", valore : "4"},
-   {descrizione : "1° Libero", valore : "5"},
-   {descrizione : "2° Pomeriggio", valore : "6"}
- ];
 
 	reportsServices.getCustomersReports($scope).then(function(result){
 		$scope.report = result.data;
@@ -51,7 +51,7 @@ myApp.controller('customersReportsController', ['$scope', 'reportsServices','$lo
    reportsServices.update($scope,$scope.report).then(function(result){
     $scope.data = result.data;
     if (!result.data.error) {
-       $location.path("/dashboard");
+       $location.path("/customers");
     }
    });
     }

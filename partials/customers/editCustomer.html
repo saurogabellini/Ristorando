@@ -4,44 +4,52 @@
 		<fieldset>
 
 			<div class="control-group">
-				<label class="control-label" for="Giorno">Giorno</label>
+				<label class="control-label" for="NomeOspite">NOME</label>
 				<div class="controls">
-					<input type="text" class="span4 disabled" id="giorno" ng-model="customer.giorno"  disabled>
+					<input type="text" class="span4 disabled" id="NomeOspite" ng-model="customer.NomeOspite"  disabled>
 				</div> <!-- /controls -->
 			</div> <!-- /control-group -->
 
 
 			<div class="control-group">
-				<label class="control-label" for="firstname">Turno</label>
-				<div class="controls">
-					<input type="text" class="span4 disabled" id="turno" ng-model="customer.turno"  disabled>
+				<label class="control-label" for="Utente">Utente</label>
+				<div class="controls">					
+					<input type="checkbox" id="noturno" ng-model="customer.Utente" ng-true-value="1" ng-false-value="0">(Ricevuto Utente)
 				</div> <!-- /controls -->
 			</div> <!-- /control-group -->
 
 
 			<div class="control-group">
-				<label class="control-label" for="lastname">modifica</label>
-				<div class="controls">
-					<select ng-model="customer.modifica" >
-					   <option ng-repeat="x in variazioni" value="{{x.descrizione}}"  ng-selected="{{x.descrizione == customer.modifica}}">{{x.descrizione}}</option>
-					</select>
+				<label class="control-label" for="Delegato1">Delegato1</label>
+				<div class="controls">			
+					<input type="text" class="span4 disabled" id="Delegato1" ng-model="customer.Delegato1"  disabled>		
+					<input type="checkbox" id="noturno" ng-model="customer.CheckDelegato1" ng-true-value="1" ng-false-value="0">(Ricevuto Delegato1)
 				</div> <!-- /controls -->
 			</div> <!-- /control-group -->
+
+
+			<div class="control-group">
+					<label class="control-label" for="Delegato2">Delegato2</label>
+					<div class="controls">			
+						<input type="text" class="span4 disabled" id="Delegato2" ng-model="customer.Delegato2"  disabled>		
+						<input type="checkbox" id="noturno" ng-model="customer.CheckDelegato2" ng-true-value="1" ng-false-value="0">(Ricevuto Delegato2)
+					</div> <!-- /controls -->
+				</div> <!-- /control-group -->
+				
 
 
 			<div class="control-group">
 				<label class="control-label" for="email">note</label>
 				<div class="controls">
-					<input class="span4" name="modifica" placeholder="modifica" ng-model="customer.note" />
+					<input class="span4" name="modifica" placeholder="modifica" ng-model="customer.Note" />
 				</div> <!-- /controls -->
 			</div> <!-- /control-group -->
 
-
 			<div class="form-actions">
-				<input type="hidden" name="id" ng-model="customer.id">
-				<button type="button" class="btn btn-primary" validation-submit="editCustomerForm" ng-click="updateCustomer()">Save</button>
-				<button ng-click="cancel()" class="btn">Cancel</button>
-			</div> <!-- /form-actions -->
+					<button type="button" class="btn btn-primary" validation-submit="editCustomerForm" ng-click="updateCustomer()">Salva</button>
+					<button ng-click="cancel()" class="btn">Annulla</button>
+				</div> <!-- /form-actions -->
+
 		</fieldset>
 	</form>
 

@@ -15,11 +15,11 @@ var myApp = angular.module('myApp', [
 //Config phase
 myApp.config(function($urlRouterProvider, $httpProvider) {
   //session check and redirect to specific state
-  if(!window.sessionStorage["userInfo"]){
+  //if(!window.sessionStorage["userInfo"]){
 	$urlRouterProvider.otherwise("/login");  
-  }else{
-	$urlRouterProvider.otherwise("/dashboard");  
-  }
+ // }else{
+	//$urlRouterProvider.otherwise("/customers");  
+ // }
     
 });
 

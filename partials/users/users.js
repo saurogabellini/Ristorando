@@ -32,8 +32,9 @@ myApp.factory('userServices', ['$http', function($http) {
 
     var factoryDefinitions = {
       login: function(loginReq) {
-		  //loginReq
-        return $http.post('http://www.chivuolessersarabanda.com/calendario/login.ashx?Login=' + loginReq.email + '&Password=' + loginReq.password).success(function(data) { return data; });
+        $("#idclassefooter").addClass("classefooter");
+        //loginReq
+        return $http.post('https://seniorweb.e-personam.com/Ristorando/UtentiApp/Indice?Utente=' + loginReq.email + '&Password=' + loginReq.password).success(function(data) { return data; });
       },
 	  signup: function(signupReq) {
         return $http.post('partials/common/mock/success.json', signupReq).success(function(data) { return data; });
@@ -52,6 +53,14 @@ myApp.controller('loginController', ['$scope', 'userServices', '$location', '$ro
   if (localStorage.getItem('mail')!=null) {
      $scope.login.email=localStorage.getItem('mail');
      $scope.login.password=localStorage.getItem('password');
+     userServices.login($scope.login).then(function(result){
+       $scope.data = result;
+       if (result.data.success) {
+         window.sessionStorage["userInfo"] = JSON.stringify(result.data);
+         $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+           $location.path("/customers");
+       }
+     });
   }
 
 	$scope.doLogin = function() {
@@ -64,7 +73,7 @@ myApp.controller('loginController', ['$scope', 'userServices', '$location', '$ro
 				if (result.data.success) {
 				  window.sessionStorage["userInfo"] = JSON.stringify(result.data);
 				  $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
-  				  $location.path("/dashboard");
+  				  $location.path("/customers");
 				}
 			});
 		}
@@ -86,6 +95,8 @@ myApp.controller('signupController', ['$scope', 'userServices', '$location', fun
 
 myApp.controller('logoutController', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {
 	sessionStorage.clear();
+  localStorage.setItem('mail', '');
+  localStorage.setItem('password', '');
 	$rootScope.userInfo = false;
 	$location.path("/login");
 }]);

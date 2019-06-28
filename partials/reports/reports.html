@@ -2,7 +2,7 @@
 <div class="span6">
   <div class="widget widget-nopad">
 	<div class="widget-header"> <i class="icon-list-alt"></i>
-	  <h3> Customers</h3>
+	  <h3> Impostazioni</h3>
 	</div>
 	<!-- /widget-header -->
 	<div class="widget-content" style="padding:5px;" ng-controller="customersReportsController">
@@ -11,35 +11,26 @@
     	<form id="edit-profile" novalidate name="editutente" autocomplete="off" class="form-horizontal">
     		<fieldset>
     <div class="control-group">
-      <label class="control-label" for="email">COGNOME</label>
+      <label class="control-label" for="email">PASSWORD</label>
       <div class="controls">
-        <input class="span4" name="COGNOME" placeholder="NOME" ng-model="report.COGNOME" />
+        <input class="span4" type="password" name="firstName" placeholder="*******" ng-model="report.firstName" />
       </div> <!-- /controls -->
     </div> <!-- /control-group -->
 
     <div class="control-group">
-      <label class="control-label" for="email">NOME</label>
+      <label class="control-label" for="email">CONFERMA PASSWORD</label>
       <div class="controls">
-        <input class="span4" name="NOME" placeholder="NOME" ng-model="report.NOME" />
+        <input class="span4" type="password" name="lastName" placeholder="*******" ng-model="report.lastName"  />
       </div> <!-- /controls -->
     </div> <!-- /control-group -->
 
 
 
-    <div class="control-group">
-			 <label class="control-label" for="lastname">INIZIO TURNO</label>
-				<div class="controls">
-					<select ng-model="report.INIZIOTURNO" >
-					   <option ng-repeat="x in TURNI" value="{{x.valore}}"  ng-selected="{{x.valore == report.INIZIOTURNO}}">{{x.descrizione}}</option>
-					</select>
-				</div> <!-- /controls -->
-			</div> <!-- /control-group -->
 
 
       			<div class="form-actions">
       				<input type="hidden" name="id" ng-model="customer.id">
-      				<button type="button" class="btn btn-primary" validation-submit="editutente" ng-click="update()">Save</button>
-      				<button ng-click="cancel()" class="btn">Cancel</button>
+      				<button type="button" class="btn btn-primary" validation-submit="editutente" ng-click="update()">Salva</button>
       			</div> <!-- /form-actions -->
 
           </fieldset>

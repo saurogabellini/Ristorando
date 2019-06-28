@@ -79,17 +79,37 @@ myApp.factory('customerServices', ['$http', function($http) {
 
     var factoryDefinitions = {
 	  getCustomers: function($scope,meseint) {
-        return $http.get('http://www.chivuolessersarabanda.com/calendario/mese.ashx?Anno=2018&Mese=' + meseint  + '&Login=' + $scope.userInfo.data.email).success(function(data) { return data; });
+       $("#idclassefooter").removeClass("classefooter");
+        
+        return $http.get('https://seniorweb.e-personam.com/Ristorando/EstrazioneConsegne/Indice?CodiceAssociazione=' + $scope.userInfo.data.email).success(function(data) { return data; });
       },
 	  addCustomer: function(customerReq) {
         return $http.post('partials/common/mock/success.json', customerReq).success(function(data) { return data; });
       },
 	  getCustomer: function($scope, customerId) {
 
-        return $http.get('http://www.chivuolessersarabanda.com/calendario/giorno.ashx?Id=' + customerId + '&Login=' + $scope.userInfo.data.email).success(function(data) { return data; });
+        $("#idclassefooter").addClass("classefooter");
+        return $http.get('https://seniorweb.e-personam.com/Ristorando/EstrazioneConsegne/Consegna?CodiceOspite=' + customerId + '&CodiceAssociazione=' + $scope.userInfo.data.email).success(function(data) { return data; });
       },
 	  updateCustomer: function($scope,customerReq) {
-        return $http.get('http://www.chivuolessersarabanda.com/calendario/UpdateGiorno.ashx?note=' + customerReq.note + '&modifica=' + customerReq.modifica + '&Id=' + customerReq.id + '&Login=' + $scope.userInfo.data.email , customerReq).success(function(data) { return data; });
+        var RicevutoUtente= customerReq.Utente;
+        if (RicevutoUtente == null) { RicevutoUtente = 0;}
+
+        var RicevutoDelegato1 = customerReq.CheckDelegato1;        
+        if (RicevutoDelegato1 == null) { RicevutoDelegato1 = 0; }
+
+        var RicevutoDelegato2 = customerReq.CheckDelegato2;
+        if (RicevutoDelegato2 == null) { RicevutoDelegato2 = 0; }
+
+        if ((RicevutoDelegato2 == 1) && ( (customerReq.Delegato2 == '') || (customerReq.Delegato2 == null))) {          
+          return;
+        } 
+        if ((RicevutoDelegato1 == 1) && ( (customerReq.Delegato1 == '') || (customerReq.Delegato1 == null))) {   
+          return;
+        } 
+        $("#idclassefooter").addClass("classefooter");
+        return $http.get('https://seniorweb.e-personam.com/Ristorando/EstrazioneConsegne/UpDateConsegna?CodiceOspite=' + customerReq.CodiceOspite + '&Note=' + customerReq.Note +
+            '&RicevutoUtente=' + RicevutoUtente + '&RicevutoDelegato1=' + RicevutoDelegato1 + '&RicevutoDelegato2=' + RicevutoDelegato2 + '&Utente=' + $scope.userInfo.data.lastName, customerReq).success(function(data)  { return data; });
       },
 	}
 
@@ -101,66 +121,38 @@ function jsonToURI(json){ return encodeURIComponent(JSON.stringify(json)); }
 
 //Controllers
 myApp.controller('getCustomersController', ['$scope',  'customerServices', '$location' ,'dataTable', 'ngTableParams', function($scope, customerServices, $location , dataTable,ngTableParams) {
-   $scope.mesi =  [
-    {descrizione : "Gennaio", numero : "1"},
-    {descrizione : "Febbraio", numero : "2"},
-    {descrizione : "Marzo", numero : "3"},
-    {descrizione : "Aprile", numero : "4"},
-    {descrizione : "Maggio", numero : "5"},
-    {descrizione : "Giugno", numero : "6"},
-    {descrizione : "Luglio", numero : "7"},
-    {descrizione : "Agosto", numero : "8"},
-    {descrizione : "Settembre", numero : "9"},
-    {descrizione : "Ottobre", numero : "10"},
-    {descrizione : "Novembre", numero : "11"},
-    {descrizione : "Dicembre", numero : "12"}
-  ];
-  var d = new Date();
-  $scope.meseattuale = d.getMonth() +1;
-  //$scope.u1sers = [
-  //{ id: "1", giorno: "1", orario: 'Nagpur', modifica: '',note: '' },
-  //{ id: "1", giorno: "1", orario: 'Nagpur', modifica: '',note: '' },
-  //{ id: "1", giorno: "1", orario: 'Nagpur', modifica: '',note: '' },
-  //{ id: "1", giorno: "1", orario: 'Nagpur', modifica: '',note: '' },
-  //{ id: "1", giorno: "1", orario: 'Nagpur', modifica: '',note: '' },
-  //];
-
-  //$scope.customerstList = new ngTableParams({},{ dataset:  $scope.u1sers});
 
 	customerServices.getCustomers($scope,$scope.meseattuale).then(function(result){
 		$scope.data = result.data;
-    $scope.venditori = result.data.response;
+    $scope.venditori = result.data;
 		if (!result.data.error) {
-       var data = result.data.response;
+       var data = result.data;
        //dataTable.render($scope, '', "customerstList", result.data.response);
-       $scope.customerstList = new ngTableParams({},{ dataset: $scope.venditori});
+       //$scope.customerstList = new ngTableParams({ count: $scope.venditori.length},{ counts: [], dataset: $scope.venditori});
+
+       $scope.customerstList = new ngTableParams({ count: $scope.venditori.length},{ counts: [], dataset: $scope.venditori});
 		}
 	});
 
 
 
-
+  $scope.calculateTotal = function(){
+      var total = 0;
+      $scope.venditori.forEach(function(item){
+          total += item.scontrino;
+      });
+      return Math.round(total * 100) / 100 ;
+  };
 
 
   $scope.edit = function(item){
-    console.log(item);
-    $location.path("/edit/" + item.id);
+    if ((item.Orario== null) || (item.Orario== '')) {
+       $location.path("/edit/" + item.id);
+    }
     return;
   }
 
-	$scope.$watch('mese', function(newValue, oldValue) {
-		customerServices.getCustomers($scope,newValue).then(function(result){
-    $scope.customerstList.page(2);
-		$scope.data = result.data;
-    $scope.venditori = result.data.response;
-		if (!result.data.error) {
-			$scope.customerstList = new ngTableParams({},{ dataset: $scope.venditori});
-      $scope.customerstList.settings().$scope = $scope;
-      $scope.customerstList.reload();
-      $scope.customerstList.page(1);
-		}
-		});
-	});
+
 }]);
 
 
