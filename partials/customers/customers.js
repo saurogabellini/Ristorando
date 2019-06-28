@@ -107,6 +107,10 @@ myApp.factory('customerServices', ['$http', function($http) {
         if ((RicevutoDelegato1 == 1) && ( (customerReq.Delegato1 == '') || (customerReq.Delegato1 == null))) {   
           return;
         } 
+        if ((RicevutoUtente == 1) && ((customerReq.CodiceOspite != customerReq.QRCODE))) {
+          return;
+        }
+
         $("#idclassefooter").addClass("classefooter");
         return $http.get('https://seniorweb.e-personam.com/Ristorando/EstrazioneConsegne/UpDateConsegna?CodiceOspite=' + customerReq.CodiceOspite + '&Note=' + customerReq.Note +
             '&RicevutoUtente=' + RicevutoUtente + '&RicevutoDelegato1=' + RicevutoDelegato1 + '&RicevutoDelegato2=' + RicevutoDelegato2 + '&Utente=' + $scope.userInfo.data.lastName, customerReq).success(function(data)  { return data; });
