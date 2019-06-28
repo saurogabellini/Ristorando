@@ -220,10 +220,8 @@ myApp.controller('editCustomerController', ['$scope', 'customerResolved', 'custo
   $scope.leggiqrcode = function() {
 
     cordova.plugins.barcodeScanner.scan(
-         function () {
-            alert(result.text);
-          $("#QRCODE").val(result.text);
-          alert(r$("#QRCODE").val());
+         function (result) {
+            $("#QRCODE").val(result.text);
        }, 
        function (error) {
          alert("Errore nella scansione " + error);
