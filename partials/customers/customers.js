@@ -221,7 +221,9 @@ myApp.controller('editCustomerController', ['$scope', 'customerResolved', 'custo
 
     cordova.plugins.barcodeScanner.scan(
          function () {
+            alert(result.text);
           $("#QRCODE").val(result.text);
+          alert(r$("#QRCODE").val());
        }, 
        function (error) {
          alert("Errore nella scansione " + error);
