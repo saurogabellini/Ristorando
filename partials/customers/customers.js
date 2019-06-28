@@ -138,6 +138,10 @@ myApp.controller('getCustomersController', ['$scope',  'customerServices', '$loc
 		}
 	});
 
+  $scope.leggiqrcode = function() {
+		$location.path("/customers");
+  }
+
 
 
   $scope.calculateTotal = function(){
@@ -210,6 +214,21 @@ myApp.controller('editCustomerController', ['$scope', 'customerResolved', 'custo
 	 });
     }
   };
+
+  $scope.leggiqrcode = function() {
+	
+    
+    cordova.plugins.barcodeScanner.scan(
+         function (result) {
+          customer.QRCODE= result.text;
+       }, 
+       function (error) {
+         alert("Errore nella scansione " + error);
+      }
+   );
+    
+  }
+
 
   $scope.cancel = function() {
 		$location.path("/customers");

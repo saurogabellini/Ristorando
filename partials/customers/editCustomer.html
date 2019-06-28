@@ -15,8 +15,8 @@
 				<label class="control-label" for="NomeOspite">QRCODE</label>
 				<div class="controls">
 					<!--- disabled style="display: none;" -->
-					<input type="text" class="span4 disabled" id="QRCODE" ng-model="customer.QRCODE" style="display: none;" >					
-					<button type="button" class="btn btn-primary" validation-submit="editCustomerForm" onclick="leggiqrcode();">LEGGI QRCODE</button>
+					<input type="text" class="span4 disabled" id="QRCODE" ng-model="customer.QRCODE" >					
+					<button type="button" class="btn btn-primary" validation-submit="editCustomerForm" ng-click="leggiqrcode()" >LEGGI QRCODE</button>
 				</div> <!-- /controls -->
 			</div> <!-- /control-group -->
 
@@ -64,19 +64,3 @@
 	</form>
 
 </div>
-
-
-<script>  
-  function leggiqrcode()
-   {  
-   cordova.plugins.barcodeScanner.scan(
-      function (result) {
-      	$("#QRCODE").val(result.text);
-      }, 
-      function (error) {
-         alert("Errore nella scansione " + error);
-      }
-   );
-   }
-
-</script>
