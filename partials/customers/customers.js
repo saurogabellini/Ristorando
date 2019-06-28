@@ -88,7 +88,7 @@ myApp.factory('customerServices', ['$http', function($http) {
       },
 	  getCustomer: function($scope, customerId) {
 
-        $("#idclassefooter").addClass("classefooter");
+      $("#idclassefooter").removeClass("classefooter");
         return $http.get('https://seniorweb.e-personam.com/Ristorando/EstrazioneConsegne/Consegna?CodiceOspite=' + customerId + '&CodiceAssociazione=' + $scope.userInfo.data.email).success(function(data) { return data; });
       },
 	  updateCustomer: function($scope,customerReq) {
