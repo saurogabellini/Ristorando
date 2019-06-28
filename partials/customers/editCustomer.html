@@ -1,0 +1,48 @@
+<div>
+
+	<form id="edit-profile" novalidate name="editCustomerForm" autocomplete="off" class="form-horizontal">
+		<fieldset>
+
+			<div class="control-group">
+				<label class="control-label" for="Giorno">Giorno</label>
+				<div class="controls">
+					<input type="text" class="span4 disabled" id="giorno" ng-model="customer.giorno"  disabled>
+				</div> <!-- /controls -->
+			</div> <!-- /control-group -->
+
+
+			<div class="control-group">
+				<label class="control-label" for="firstname">Turno</label>
+				<div class="controls">
+					<input type="text" class="span4 disabled" id="turno" ng-model="customer.turno"  disabled>
+				</div> <!-- /controls -->
+			</div> <!-- /control-group -->
+
+
+			<div class="control-group">
+				<label class="control-label" for="lastname">modifica</label>
+				<div class="controls">
+					<select ng-model="customer.modifica" >
+					   <option ng-repeat="x in variazioni" value="{{x.descrizione}}"  ng-selected="{{x.descrizione == customer.modifica}}">{{x.descrizione}}</option>
+					</select>
+				</div> <!-- /controls -->
+			</div> <!-- /control-group -->
+
+
+			<div class="control-group">
+				<label class="control-label" for="email">note</label>
+				<div class="controls">
+					<input class="span4" name="modifica" placeholder="modifica" ng-model="customer.note" />
+				</div> <!-- /controls -->
+			</div> <!-- /control-group -->
+
+
+			<div class="form-actions">
+				<input type="hidden" name="id" ng-model="customer.id">
+				<button type="button" class="btn btn-primary" validation-submit="editCustomerForm" ng-click="updateCustomer()">Save</button>
+				<button ng-click="cancel()" class="btn">Cancel</button>
+			</div> <!-- /form-actions -->
+		</fieldset>
+	</form>
+
+</div>

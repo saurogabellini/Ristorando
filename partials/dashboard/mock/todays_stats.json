@@ -1,0 +1,11 @@
+{
+	"success": true,
+	"response":{
+		"stats" : 851,
+		"likes" : 423,
+		"twitter": 922,
+		"announcements" : 25,
+		"turno" : "mattina",
+		"orario" : "06:00-12:00"
+	}
+}

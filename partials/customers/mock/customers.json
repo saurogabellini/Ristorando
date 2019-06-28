@@ -1,0 +1,19 @@
+{
+	"success": true,
+	"response":[
+		{
+			"id" : "1",
+			"giorno" : "01/03/2018",
+			"orario" : "Mattina 10:00",
+			"modifica" : "John@gmail.com",
+			"note" : "(444)-83388-9999"
+		},
+		{
+			"id" : "2",
+			"giorno" : "02/03/2018",
+			"orario" : "Mattina 10:00",
+			"modifica" : "John@gmail.com",
+			"note" : "(444)-83388-9999"
+		}
+	]
+}
