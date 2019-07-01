@@ -15,7 +15,7 @@
 				<label class="control-label" for="NomeOspite">QRCODE</label>
 				<div class="controls">
 					<!--- disabled style="display: none;" -->
-					<input type="text" class="span4 disabled" id="QRCODE"  >					
+					<input type="text" class="span4 disabled" id="QRCODE" style="display: none;" >					
 					<button type="button" class="btn btn-primary" validation-submit="editCustomerForm" ng-click="leggiqrcode()" >LEGGI QRCODE</button>
 				</div> <!-- /controls -->
 			</div> <!-- /control-group -->
@@ -51,6 +51,7 @@
 			<div class="control-group">
 				<label class="control-label" for="email">note</label>
 				<div class="controls">
+						<input type="checkbox" id="noturno" ng-model="customer.CheckNonQrCode" ng-true-value="1" ng-false-value="0">(Utente senza QRCODE)<br/>
 					<input class="span4" name="modifica" placeholder="modifica" ng-model="customer.Note" />
 				</div> <!-- /controls -->
 			</div> <!-- /control-group -->

@@ -101,10 +101,18 @@ myApp.factory('customerServices', ['$http', function($http) {
         var RicevutoDelegato2 = customerReq.CheckDelegato2;
         if (RicevutoDelegato2 == null) { RicevutoDelegato2 = 0; }
 
+
+        var CheckNonQrCode =customerReq.CheckNonQrCode;
+        if (CheckNonQrCode == null) { CheckNonQrCode = 0; }
+        
+
         if ((RicevutoDelegato2 == 1) && ( (customerReq.Delegato2 == '') || (customerReq.Delegato2 == null))) {          
           return;
         } 
         if ((RicevutoDelegato1 == 1) && ( (customerReq.Delegato1 == '') || (customerReq.Delegato1 == null))) {   
+          return;
+        } 
+        if ((RicevutoUtente == 0) && (RicevutoDelegato1 == 0) && (RicevutoDelegato2 ==0) && (CheckNonQrCode == 0))   {   
           return;
         } 
 
@@ -112,6 +120,11 @@ myApp.factory('customerServices', ['$http', function($http) {
         if ((RicevutoUtente == 1) && ((customerReq.CodiceOspite != customerReq.QRCODE))) {
           return;
         }
+
+        if ((CheckNonQrCode ==1) && (customerReq.Note == "") ) {
+          return;
+        }
+
 
         $("#idclassefooter").addClass("classefooter");
         return $http.get('https://seniorweb.e-personam.com/Ristorando/EstrazioneConsegne/UpDateConsegna?CodiceOspite=' + customerReq.CodiceOspite + '&Note=' + customerReq.Note +
